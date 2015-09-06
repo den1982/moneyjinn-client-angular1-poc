@@ -17,10 +17,10 @@ angular
         'angular-md5'
 
     ])
-    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $httpProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
         $ocLazyLoadProvider.config({
-            debug: true,
+            debug: false,
             events: true,
         });
 
@@ -54,11 +54,6 @@ angular
                                 {
                                     name: 'angular-storage',
                                     files: ['bower_components/a0-angular-storage/dist/angular-storage.min.js']
-                                }) ,
-                            $ocLazyLoad.load(
-                                {
-                                    name: 'sjcl',
-                                    files: ['bower_components/sjcl/sjcl.js']
                                 })
                     }
                 }
@@ -77,14 +72,9 @@ angular
                         return $ocLazyLoad.load({
                             name: 'moneyJinnApp',
                             files: [
-                                'scripts/service/userService.js'
+                                'scripts/controllers/login/login.js'
                             ]
-                        }),
-                            $ocLazyLoad.load(
-                                {
-                                    name: 'moneyJinnApp',
-                                    files: ['scripts/controllers/login/login.js']
-                                })
+                        })
                     }
                 }
             })
@@ -94,7 +84,19 @@ angular
             })
             .state('page.reports', {
                 templateUrl: 'views/pages/reports.html',
-                url: '/reports'
+                url: '/reports',
+                resolve: {
+                    loadMyFile: function ($ocLazyLoad) {
+
+                        return $ocLazyLoad.load({
+                            name: 'moneyJinnApp',
+                            files: [
+                                'scripts/service/reportsService.js',
+                                'scripts/controllers/reports/reports.js'
+                            ]
+                        })
+                    }
+                }
             })
 
     }])
