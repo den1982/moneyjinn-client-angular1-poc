@@ -15,8 +15,10 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
         if (user == null) {
             currentUser = null;
         } else {
-            var sha1_byte = sjcl.hash.sha1.hash(user.password);
-            var password_hash = sjcl.codec.hex.fromBits(sha1_byte);
+
+            var shaObj = new jsSHA("SHA-1", "TEXT");
+            shaObj.update(user.password);
+            var password_hash = shaObj.getHash("HEX");
 
             currentUser = {
                 username: user.username,
