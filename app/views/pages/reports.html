@@ -1,14 +1,82 @@
-<div class="container-fluid" ng-controller="ReportsController">
-	<div class="row">
-		<div class="col-lg-12">
-			<h1 class="page-header">Reports</h1>
+<div ng-controller="ReportsController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Tables</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    flow of money August 2015
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="dataTable_wrapper">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <a href="" ng-click="orderByField='bookingdate'; reverseSort = !reverseSort">booking date</a>
+                                    <span ng-show="orderByField == 'bookingdate' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'bookingdate' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href="" ng-click="orderByField='invoicedate'; reverseSort = !reverseSort">invoice date</a>
+                                    <span ng-show="orderByField == 'invoicedate' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'invoicedate' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">amount</a>
+                                    <span ng-show="orderByField == 'amount' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'amount' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href=""
+                                       ng-click="orderByField='contractpartnername'; reverseSort = !reverseSort">contractual partners</a>
+                                    <span ng-show="orderByField == 'contractpartnername' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'contractpartnername' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href="" ng-click="orderByField='comment'; reverseSort = !reverseSort">comment</a>
+                                    <span ng-show="orderByField == 'comment' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'comment' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href="" ng-click="orderByField='postingaccountname'; reverseSort = !reverseSort">posting account</a>
+                                    <span ng-show="orderByField == 'postingaccountname' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'postingaccountname' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                                <th><a href=""
+                                       ng-click="orderByField='capitalsourcecomment'; reverseSort = !reverseSort">source of capital</a>
+                                    <span ng-show="orderByField == 'capitalsourcecomment' && !reverseSort" class="fa fa-caret-down"></span>
+                                    <span ng-show="orderByField == 'capitalsourcecomment' && reverseSort" class="fa fa-caret-up"></span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd gradeX" ng-repeat="item in moneyFlows | orderBy:orderByField:reverseSort">
+                                <td>{{item.bookingdate * 1000 | date: "yyyy-MM-dd"}}</td>
+                                <td>{{item.invoicedate * 1000 | date: "yyyy-MM-dd"}}</td>
+                                <td ng-class='{"text-danger": item.amount  <0}' style="text-align: right">{{item.amount
+                                                                                                          | number }} &euro;</td>
+                                <td>{{item.contractpartnername}}</td>
+                                <td>{{item.comment}}</td>
+                                <td>{{item.postingaccountname}}</td>
+                                <td>{{item.capitalsourcecomment}}</td>
 
-			{{responseData}}
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td style="text-align: right"  ng-class='{"text-danger": item.amount  <0}'>&#931; &nbsp;{{getTotalFlow()}}&euro;</td>
+                                <td colspan="4"></td>
 
-			{{errorMessage}}
 
-		</div>
-		<!-- /.col-lg-12 -->
-	</div>
-	<!-- /.row -->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.col-lg-6 -->
+    </div>
 </div>

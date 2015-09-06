@@ -7,8 +7,11 @@
  * Controller of the moneyJinnApp
  */
 angular.module('moneyJinnApp')
-    .controller('MainCtrl', function ($rootScope, $scope,$state, $position, UserService) {
+    .controller('MainCtrl', function ($rootScope, $scope,$state, $position, UserService, TranslationService) {
         var service = $scope;
+
+        //service.lang = TranslationService.getTranslation($scope, 'de');
+
 
         if(!UserService.isUserCheckedIn()) {
             $rootScope.$broadcast('unauthorized');

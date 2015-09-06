@@ -15,12 +15,14 @@ angular
         'angular-loading-bar',
         'angular-storage',
         'angular-md5'
-
     ])
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
 
+
+
+
         $ocLazyLoadProvider.config({
-            debug: false,
+            debug: true,
             events: true,
         });
 

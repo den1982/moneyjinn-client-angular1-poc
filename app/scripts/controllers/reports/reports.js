@@ -11,14 +11,22 @@ angular.module('moneyJinnApp')
 
         var reports = $scope;
 
-        reports.errorMessage = "hallo";
-        reports.responseData = null;
+        reports.errorMessage = null;
+        reports.moneyFlows = null;
 
         ReportsService.getReports().then(function (response) {
             if (response.data.listReportsResponse){
-                reports.responseData = response.data.listReportsResponse;
+                reports.moneyFlows = response.data.listReportsResponse.moneyflowTransport;
             }
         });
+
+        reports.getTotalFlow = function(){
+            var total = 0;
+            for(var i = 0; i < $scope.moneyFlows.length; i++){
+                total += parseFloat($scope.moneyFlows[i].amount);
+            }
+            return total;
+        }
 
 
     })
