@@ -41,6 +41,8 @@ angular.module('moneyJinnApp')
 
         reports.onYearSelect = function () {
             reports.moneyFlows = null;
+            reports.select.month = null
+
             if (reports.select.year != null) {
 
                 ReportsService.getReportList(reports.select.year, "").then(function (response) {
