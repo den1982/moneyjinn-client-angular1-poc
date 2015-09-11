@@ -14,15 +14,23 @@ angular
         'ui.bootstrap',
         'angular-loading-bar',
         'angular-storage',
-        'angular-md5'
+        'angular-md5',
+        'pascalprecht.translate'
+
+
     ])
-    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$httpProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', '$translateProvider', function ($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, $translateProvider) {
 
-
+        $translateProvider.useStaticFilesLoader({
+            prefix: '/data/i18n/lang_',
+            suffix: '.json'
+        });
+        $translateProvider.useSanitizeValueStrategy('escape');
+        $translateProvider.preferredLanguage('2');
 
 
         $ocLazyLoadProvider.config({
-            debug: true,
+            debug: false,
             events: true,
         });
 
@@ -101,4 +109,15 @@ angular
                 }
             })
 
-    }])
+    }]).filter('monthNameI18nLabel', ['$translate', function($translate) {
+        return function (monthNumber) { //1 = January
+            var monthNames = [ 'TEXT_155', 'TEXT_156', 'TEXT_157', 'TEXT_158', 'TEXT_159', 'TEXT_160',
+                'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166' ];
+
+            return monthNames[monthNumber - 1];
+        }
+    }]).filter('capitalize', function() {
+        return function(input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    });

@@ -28,7 +28,7 @@ angular.module('moneyJinnApp')
             UserService.login(login.user).then(function (response) {
 
                 if (response.data.getUserSettingsForStartupResponse){
-                    var userSettings =  JSON.stringify(response.data.getUserSettingsForStartupResponse);
+                    var userSettings =  response.data.getUserSettingsForStartupResponse;
                     UserService.setCurrentUserSettings(userSettings);
                     $rootScope.$broadcast('authorized');
                     $state.go('page.home');

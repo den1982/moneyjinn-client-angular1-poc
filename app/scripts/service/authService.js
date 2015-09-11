@@ -151,11 +151,6 @@ angular.module('moneyJinnApp')
             }
         }
 
-
-
-
-
-
     }).config(['$httpProvider', function ($httpProvider) {
         $httpProvider.interceptors.push('AuthInterceptor');
     }])

@@ -58,6 +58,7 @@ module.exports = function (grunt) {
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
+          '.data/{,*/}*.json',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -77,6 +78,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
+              connect.static('data'),
               connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
@@ -92,6 +94,7 @@ module.exports = function (grunt) {
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
+              connect.static('data'),
               connect.static('test'),
               connect().use(
                 '/bower_components',
@@ -337,6 +340,12 @@ module.exports = function (grunt) {
         cwd: '<%= yeoman.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      lang: {
+        expand: true,
+        cwd: '<%= yeoman.app %>/data',
+        dest: 'data/',
+        src: '{,*/}*.json'
       }
     },
 

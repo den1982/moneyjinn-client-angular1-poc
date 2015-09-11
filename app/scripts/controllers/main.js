@@ -7,10 +7,8 @@
  * Controller of the moneyJinnApp
  */
 angular.module('moneyJinnApp')
-    .controller('MainCtrl', function ($rootScope, $scope,$state, $position, UserService, TranslationService) {
+    .controller('MainCtrl', function ($rootScope, $scope,$state, $position, UserService, $translate) {
         var service = $scope;
-
-        //service.lang = TranslationService.getTranslation($scope, 'de');
 
 
         if(!UserService.isUserCheckedIn()) {
@@ -20,6 +18,12 @@ angular.module('moneyJinnApp')
             service.main = {
                 currentUser: UserService.getCurrentUser(),
                 currentUserSettings: UserService.getCurrentUserSettings()
+            }
+
+            if (service.main.currentUserSettings.settingDisplayedLanguage != null) {
+                $translate.use(service.main.currentUserSettings.settingDisplayedLanguage);
+            } else {
+                $translate.use('1');
             }
         }
 

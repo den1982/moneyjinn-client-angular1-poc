@@ -59,7 +59,7 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
 
         return $http.get('http://laladev.org/moneyflow/server/user/getUserSettingsForStartup/' + user.username)
             .success(function (response) {
-                service.response = JSON.stringify(response);
+                return response;
             });
 
     }

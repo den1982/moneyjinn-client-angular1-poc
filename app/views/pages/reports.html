@@ -1,51 +1,61 @@
 <div ng-controller="ReportsController">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Tables</h1>
+            <h1 class="page-header">{{'reports' | translate | capitalize}}</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <select ng-change="onYearSelect()" ng-model="select.year" ng-options="year as year for year in allYears">
+            </select>
+
+            <select ng-change="updateReportsView()" ng-model="select.month" ng-options="month as (month | monthNameI18nLabel | translate) for month in allMonth" ng-if="allMonth">
+            </select>
+        </div>
+    </div>
+    <br/>
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default" ng-if="moneyFlows">
                 <div class="panel-heading">
-                    flow of money August 2015
+                    {{'TEXT_61' | translate}} {{select.month | monthNameI18nLabel | translate}} {{select.year}}
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <div class="dataTable_wrapper">
-                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <table class="table table-striped table-bordered table-hover" id="dataTables-example" datatable="ng">
                             <thead>
                             <tr>
                                 <th>
-                                    <a href="" ng-click="orderByField='bookingdate'; reverseSort = !reverseSort">booking date</a>
+                                    <a href="" ng-click="orderByField='bookingdate'; reverseSort = !reverseSort">{{ 'TEXT_16' | translate }}</a>
                                     <span ng-show="orderByField == 'bookingdate' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'bookingdate' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
-                                <th><a href="" ng-click="orderByField='invoicedate'; reverseSort = !reverseSort">invoice date</a>
+                                <th><a href="" ng-click="orderByField='invoicedate'; reverseSort = !reverseSort">{{ 'TEXT_17' | translate }}</a>
                                     <span ng-show="orderByField == 'invoicedate' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'invoicedate' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
-                                <th><a href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">amount</a>
+                                <th><a href="" ng-click="orderByField='amount'; reverseSort = !reverseSort">{{ 'TEXT_18' | translate }}</a>
                                     <span ng-show="orderByField == 'amount' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'amount' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
                                 <th><a href=""
-                                       ng-click="orderByField='contractpartnername'; reverseSort = !reverseSort">contractual partners</a>
+                                       ng-click="orderByField='contractpartnername'; reverseSort = !reverseSort">{{ 'TEXT_2' | translate }}</a>
                                     <span ng-show="orderByField == 'contractpartnername' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'contractpartnername' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
-                                <th><a href="" ng-click="orderByField='comment'; reverseSort = !reverseSort">comment</a>
+                                <th><a href="" ng-click="orderByField='comment'; reverseSort = !reverseSort">{{ 'TEXT_21' | translate }}</a>
                                     <span ng-show="orderByField == 'comment' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'comment' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
-                                <th><a href="" ng-click="orderByField='postingaccountname'; reverseSort = !reverseSort">posting account</a>
+                                <th><a href="" ng-click="orderByField='postingaccountname'; reverseSort = !reverseSort">{{ 'TEXT_232' | translate }}</a>
                                     <span ng-show="orderByField == 'postingaccountname' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'postingaccountname' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
                                 <th><a href=""
-                                       ng-click="orderByField='capitalsourcecomment'; reverseSort = !reverseSort">source of capital</a>
+                                       ng-click="orderByField='capitalsourcecomment'; reverseSort = !reverseSort">{{ 'TEXT_19' | translate }}</a>
                                     <span ng-show="orderByField == 'capitalsourcecomment' && !reverseSort" class="fa fa-caret-down"></span>
                                     <span ng-show="orderByField == 'capitalsourcecomment' && reverseSort" class="fa fa-caret-up"></span>
                                 </th>
@@ -65,7 +75,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2"></td>
-                                <td style="text-align: right"  ng-class='{"text-danger": item.amount  <0}'>&#931; &nbsp;{{getTotalFlow()}}&euro;</td>
+                                <td style="text-align: right" ng-class='{"text-danger": item.amount  <0}'>&#931; &nbsp;{{getTotalFlow()}}&euro;</td>
                                 <td colspan="4"></td>
 
 
