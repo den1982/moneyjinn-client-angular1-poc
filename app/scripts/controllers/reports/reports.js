@@ -14,12 +14,48 @@ angular.module('moneyJinnApp')
         reports.allYears = null;
         reports.allMonth = null;
 
+        reports.exists = {
+            monthleySettlement: false
+        }
+
+        reports.sum = {
+            amountCurrent: 0
+        }
+
         reports.errorMessage = null;
         reports.moneyFlows = null;
+        reports.reportTurnoverCapitalsource = null;
+        reports.reportList = null;
+
+        reports.calculatedMonthTurnover = 0;
+
         reports.select = {
             year: null,
             month: null
         };
+
+        reports.dept = {
+            data: [],
+            sum: {
+                amountBeginOfMonthFixed: 0,
+                amountEndOfMonthFixed: 0,
+                amountCurrent: 0,
+                amountDifference: 0,
+                amountEndOfMonthCalculated: 0
+            }
+        }
+
+        reports.equity = {
+            data: [],
+            sum: {
+                amountBeginOfMonthFixed: 0,
+                amountEndOfMonthFixed: 0,
+                amountCurrent: 0,
+                amountDifference: 0,
+                amountEndOfMonthCalculated: 0
+            }
+        }
+
 
         var current_year = new Date().getFullYear();
         var current_month = new Date().getMonth() + 1; //january ==1
@@ -39,9 +75,44 @@ angular.module('moneyJinnApp')
             }
         });
 
-        reports.onYearSelect = function () {
+        reports.clearDataStructures = function() {
             reports.moneyFlows = null;
+            reports.reportList = null;
+            reports.calculatedMonthTurnover = 0;
+
+
+            reports.dept = {
+                data: [],
+                sum: {
+                    amountBeginOfMonthFixed: 0,
+                    amountEndOfMonthFixed: 0,
+                    amountCurrent: 0,
+                    amountDifference: 0,
+                    amountEndOfMonthCalculated: 0
+                }
+            }
+
+            reports.equity = {
+                data: [],
+                sum: {
+                    amountBeginOfMonthFixed: 0,
+                    amountEndOfMonthFixed: 0,
+                    amountCurrent: 0,
+                    amountDifference: 0,
+                    amountEndOfMonthCalculated: 0
+                }
+            }
+
+            reports.exists.monthleySettlement = false;
+        }
+
+
+
+        reports.onYearSelect = function () {
+            reports.clearDataStructures();
             reports.select.month = null
+            reports.calculatedMonthTurnover = 0;
+
 
             if (reports.select.year != null) {
 
@@ -71,20 +142,76 @@ angular.module('moneyJinnApp')
         }
 
         reports.updateReportsView = function () {
+            reports.clearDataStructures();
 
             if (reports.select.year != null && reports.select.month != null) {
                 ReportsService.getReportList(reports.select.year, reports.select.month).then(function (response) {
 
-                    var flows_size = Object.keys(response.data.listReportsResponse.moneyflowTransport).length;
-                    if (response.data.listReportsResponse && flows_size > 0) {
-                        reports.moneyFlows = response.data.listReportsResponse.moneyflowTransport;
+                    reports.reportList = response.data.listReportsResponse;
+                    var flows_size = Object.keys(reports.reportList.moneyflowTransport).length;
+
+                    if (reports.reportList && flows_size > 0) {
+                        reports.moneyFlows = reports.reportList.moneyflowTransport;
                     } else {
                         reports.moneyFlows = null;
+                    }
+
+                    var flows_size = Object.keys(reports.reportList.reportTurnoverCapitalsourceTransport).length;
+                    if (reports.reportList.reportTurnoverCapitalsourceTransport && flows_size > 0) {
+
+                        var reportTurnoverCapitalsourceArray = reports.reportList.reportTurnoverCapitalsourceTransport;
+
+                        for (var i = 0; i < reportTurnoverCapitalsourceArray.length; i++) {
+
+                            switch (reportTurnoverCapitalsourceArray[i].capitalsourceType) {
+
+                                case 1:
+                                case 2:
+                                    reports.equity.data.push(reportTurnoverCapitalsourceArray[i]);
+                                    if (reportTurnoverCapitalsourceArray[i].amountCurrent) {
+                                        reports.equity.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceArray[i].amountCurrent);
+                                    }
+                                    if (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed) {
+                                        reports.equity.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed);
+                                        reports.equity.sum.amountDifference += (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed - reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+
+                                        reports.exists.monthleySettlement = true;
+
+                                    }
+                                    reports.equity.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
+                                    reports.equity.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+
+                                    reports.calculatedMonthTurnover += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated) - parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
+
+                                    break;
+                                case 3:
+                                case 4:
+                                    reports.dept.data.push(reportTurnoverCapitalsourceArray[i]);
+                                    if (reportTurnoverCapitalsourceArray[i].amountCurrent) {
+                                        reports.dept.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceArray[i].amountCurrent);
+                                    }
+                                    if (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed) {
+                                        reports.dept.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed);
+                                        reports.dept.sum.amountDifference += (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed - reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+
+                                        reports.exists.monthleySettlement = true;
+
+                                    }
+                                    reports.dept.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
+                                    reports.dept.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+                                    break;
+
+                            }
+                        }
+
+                    } else {
+                        reports.reportTurnoverCapitalsource = null;
                     }
                 });
 
             }
         }
+
 
         reports.getTotalFlow = function () {
             var total = 0;
@@ -95,7 +222,41 @@ angular.module('moneyJinnApp')
             }
             return total;
         }
+    }).filter('capitalSourceType', function () {
+        return function (input) {
 
+            var label = 'TEXT_'
 
-    })
+            switch (input) {
+                case 1:
+                    return label + '173';
+                    break;
+                case 2:
+                    return label + '174';
+                    break;
+                case 3:
+                    return label + '278';
+                    break;
+                case 4:
+                    return label + '279';
+                    break;
+
+            }
+        }
+    }).filter('capitalSourceState', function () {
+        return function (input) {
+
+            var label = 'TEXT_'
+
+            switch (input) {
+                case 1:
+                    return label + '175';
+                    break;
+                case 2:
+                    return label + '176';
+                    break;
+            }
+        }
+    });
+
 ;

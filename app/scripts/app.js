@@ -109,10 +109,10 @@ angular
                 }
             })
 
-    }]).filter('monthNameI18nLabel', ['$translate', function($translate) {
+    }]).filter('monthNameI18nLabel', ['$translate', function ($translate) {
         return function (monthNumber) { //1 = January
-            var monthNames = [ 'TEXT_155', 'TEXT_156', 'TEXT_157', 'TEXT_158', 'TEXT_159', 'TEXT_160',
-                'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166' ];
+            var monthNames = ['TEXT_155', 'TEXT_156', 'TEXT_157', 'TEXT_158', 'TEXT_159', 'TEXT_160',
+                'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166'];
 
             return monthNames[monthNumber - 1];
         }
