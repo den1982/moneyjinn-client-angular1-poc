@@ -60,7 +60,6 @@ angular.module('moneyJinnApp')
         var current_year = new Date().getFullYear();
         var current_month = new Date().getMonth() + 1; //january ==1
 
-
         ReportsService.getReportList("", "").then(function (response) {
             if (response.data.listReportsResponse != null && response.data.listReportsResponse.allYears != null) {
                 reports.allYears = response.data.listReportsResponse.allYears;
@@ -75,7 +74,7 @@ angular.module('moneyJinnApp')
             }
         });
 
-        reports.clearDataStructures = function() {
+        reports.clearDataStructures = function () {
             reports.moneyFlows = null;
             reports.reportList = null;
             reports.calculatedMonthTurnover = 0;
@@ -107,7 +106,6 @@ angular.module('moneyJinnApp')
         }
 
 
-
         reports.onYearSelect = function () {
             reports.clearDataStructures();
             reports.select.month = null
@@ -123,11 +121,11 @@ angular.module('moneyJinnApp')
 
                             //pre select current month in select box, if there is a report of this month and if selected year is current year
                             if (current_year == reports.select.year) {
-                                for (var i = 0; i < reports.allMonth.length; i++) {
-                                    if (current_month == reports.allMonth[i]) {
-                                        reports.select.month = reports.allMonth[i];
+                                angular.forEach(reports.allMonth, function (month) {
+                                    if (current_month == month) {
+                                        reports.select.month = month;
                                     }
-                                }
+                                });
                                 reports.updateReportsView();
                             } else {
                                 reports.select.month = null;
@@ -162,50 +160,48 @@ angular.module('moneyJinnApp')
                     var flows_size = Object.keys(reports.reportList.reportTurnoverCapitalsourceTransport).length;
                     if (reports.reportList.reportTurnoverCapitalsourceTransport && flows_size > 0) {
 
-                        var reportTurnoverCapitalsourceArray = reports.reportList.reportTurnoverCapitalsourceTransport;
-
-                        for (var i = 0; i < reportTurnoverCapitalsourceArray.length; i++) {
-
-                            switch (reportTurnoverCapitalsourceArray[i].capitalsourceType) {
+                        var reportTurnoverCapitalsource = reports.reportList.reportTurnoverCapitalsourceTransport;
+                        angular.forEach(reportTurnoverCapitalsource, function (reportTurnoverCapitalsourceItem) {
+                            switch (reportTurnoverCapitalsourceItem.capitalsourceType) {
 
                                 case 1:
                                 case 2:
-                                    reports.equity.data.push(reportTurnoverCapitalsourceArray[i]);
-                                    if (reportTurnoverCapitalsourceArray[i].amountCurrent) {
-                                        reports.equity.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceArray[i].amountCurrent);
+                                    reports.equity.data.push(reportTurnoverCapitalsourceItem);
+                                    if (reportTurnoverCapitalsourceItem.amountCurrent) {
+                                        reports.equity.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceItem.amountCurrent);
                                     }
-                                    if (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed) {
-                                        reports.equity.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed);
-                                        reports.equity.sum.amountDifference += (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed - reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+                                    if (reportTurnoverCapitalsourceItem.amountEndOfMonthFixed) {
+                                        reports.equity.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceItem.amountEndOfMonthFixed);
+                                        reports.equity.sum.amountDifference += (reportTurnoverCapitalsourceItem.amountEndOfMonthFixed - reportTurnoverCapitalsourceItem.amountEndOfMonthCalculated);
 
                                         reports.exists.monthleySettlement = true;
 
                                     }
-                                    reports.equity.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
-                                    reports.equity.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+                                    reports.equity.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceItem.amountBeginOfMonthFixed);
+                                    reports.equity.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceItem.amountEndOfMonthCalculated);
 
-                                    reports.calculatedMonthTurnover += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated) - parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
+                                    reports.calculatedMonthTurnover += parseFloat(reportTurnoverCapitalsourceItem.amountEndOfMonthCalculated) - parseFloat(reportTurnoverCapitalsourceItem.amountBeginOfMonthFixed);
 
                                     break;
                                 case 3:
                                 case 4:
-                                    reports.dept.data.push(reportTurnoverCapitalsourceArray[i]);
-                                    if (reportTurnoverCapitalsourceArray[i].amountCurrent) {
-                                        reports.dept.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceArray[i].amountCurrent);
+                                    reports.dept.data.push(reportTurnoverCapitalsourceItem);
+                                    if (reportTurnoverCapitalsourceItem.amountCurrent) {
+                                        reports.dept.sum.amountCurrent += parseFloat(reportTurnoverCapitalsourceItem.amountCurrent);
                                     }
-                                    if (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed) {
-                                        reports.dept.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed);
-                                        reports.dept.sum.amountDifference += (reportTurnoverCapitalsourceArray[i].amountEndOfMonthFixed - reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+                                    if (reportTurnoverCapitalsourceItem.amountEndOfMonthFixed) {
+                                        reports.dept.sum.amountEndOfMonthFixed += parseFloat(reportTurnoverCapitalsourceItem.amountEndOfMonthFixed);
+                                        reports.dept.sum.amountDifference += (reportTurnoverCapitalsourceItem.amountEndOfMonthFixed - reportTurnoverCapitalsourceItem.amountEndOfMonthCalculated);
 
                                         reports.exists.monthleySettlement = true;
 
                                     }
-                                    reports.dept.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceArray[i].amountBeginOfMonthFixed);
-                                    reports.dept.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceArray[i].amountEndOfMonthCalculated);
+                                    reports.dept.sum.amountBeginOfMonthFixed += parseFloat(reportTurnoverCapitalsourceItem.amountBeginOfMonthFixed);
+                                    reports.dept.sum.amountEndOfMonthCalculated += parseFloat(reportTurnoverCapitalsourceItem.amountEndOfMonthCalculated);
                                     break;
 
                             }
-                        }
+                        })
 
                     } else {
                         reports.reportTurnoverCapitalsource = null;
@@ -260,7 +256,7 @@ angular.module('moneyJinnApp')
                     break;
             }
         }
-    }).directive('currencyRow', function() {
+    }).directive('currencyRow', function () {
         return {
             scope: {
                 value: '=',

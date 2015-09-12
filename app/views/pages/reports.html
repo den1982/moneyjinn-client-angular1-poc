@@ -17,7 +17,6 @@
     </div>
     <br/>
 
-
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
@@ -66,8 +65,9 @@
                             </thead>
                             <tbody>
                             <tr class="odd gradeX" ng-repeat="item in moneyFlows | orderBy:orderByField:reverseSort">
-                                <td>{{item.bookingdate * 1000 | date: "yyyy-MM-dd"}}</td>
-                                <td>{{item.invoicedate * 1000 | date: "yyyy-MM-dd"}}</td>
+
+                                <td>{{item.bookingdate * 1000 | date: main.currentUserSettings.settingDateFormat}}</td>
+                                <td>{{item.invoicedate * 1000 | date: main.currentUserSettings.settingDateFormat}}</td>
                                 <td currency-row value="item.amount"></td>
                                 <td>{{item.contractpartnername}}</td>
                                 <td>{{item.comment}}</td>
@@ -79,8 +79,6 @@
                                 <td colspan="2" style="text-align: right">&#931; &nbsp;</td>
                                 <td currency-row value="getTotalFlow()"></td>
                                 <td colspan="4"></td>
-
-
                             </tr>
                             </tbody>
                         </table>
@@ -212,16 +210,9 @@
                             <table class="table table-striped table-bordered table-hover" datatable="ng">
                                 <thead>
                                 <tr>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                    <th>
-                                        {{'TEXT_56' | translate}}
-                                    </th>
-                                    <th>
-                                        {{'TEXT_57' | translate}}
-                                    </th>
-
+                                    <th> &nbsp; </th>
+                                    <th> {{'TEXT_56' | translate}}</th>
+                                    <th> {{'TEXT_57' | translate}}</th>
                                 </tr>
 
                                 <tr ng-if="exists.monthleySettlement">
@@ -230,9 +221,7 @@
                                     <td currency-row value="(equity.sum.amountEndOfMonthFixed - reportList.amountBeginOfYear)"></td>
                                 </tr>
                                 <tr>
-                                    <th>
-                                        {{'TEXT_67' | translate}}
-                                    </th>
+                                    <th> {{'TEXT_67' | translate}}</th>
                                     <td currency-row value="calculatedMonthTurnover"></td>
                                     <td currency-row value="reportList.turnoverEndOfYearCalculated"></td>
                                 </tr>

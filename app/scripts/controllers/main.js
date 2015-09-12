@@ -42,5 +42,21 @@ angular.module('moneyJinnApp')
             $rootScope.$broadcast('unauthorized');
         };
 
+        service.getDateFormat = function (){
+
+            var dataBaseFormat = service.main.currentUserSettings.settingDateFormat;
+            var jsDateFormat = '';
+
+            if (dataBaseFormat) {
+                jsDateFormat = dataBaseFormat.replace('YYYY', 'yyyy');
+                jsDateFormat = jsDateFormat.replace('DD', 'dd');
+            }
+            if (jsDateFormat == '') {
+                jsDateFormat = 'yyyy-mm-dd'
+            }
+            return jsDateFormat;
+
+        }
+
 
     });

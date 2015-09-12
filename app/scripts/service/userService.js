@@ -39,6 +39,20 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
 
     service.setCurrentUserSettings = function (settings) {
         currentUserSettings = settings;
+
+        if (settings != null) {
+            var dataBaseFormat = currentUserSettings.settingDateFormat;
+            var jsDateFormat = '';
+
+            if (dataBaseFormat) {
+                jsDateFormat = dataBaseFormat.replace('YYYY', 'yyyy');
+                jsDateFormat = jsDateFormat.replace('DD', 'dd');
+            }
+            if (jsDateFormat == '') {
+                jsDateFormat = 'yyyy-mm-dd'
+            }
+            currentUserSettings.settingDateFormat = jsDateFormat;
+        }
         store.set('userSettings', settings);
         return settings;
     };
