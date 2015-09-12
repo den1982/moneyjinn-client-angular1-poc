@@ -151,6 +151,9 @@ angular.module('moneyJinnApp')
                     var flows_size = Object.keys(reports.reportList.moneyflowTransport).length;
 
                     if (reports.reportList && flows_size > 0) {
+                        angular.forEach(reports.reportList.moneyflowTransport, function (item) {
+                            item.amount = parseFloat(item.amount);
+                        });
                         reports.moneyFlows = reports.reportList.moneyflowTransport;
                     } else {
                         reports.moneyFlows = null;
@@ -257,6 +260,14 @@ angular.module('moneyJinnApp')
                     break;
             }
         }
+    }).directive('currencyRow', function() {
+        return {
+            scope: {
+                value: '=',
+                inverse: '='
+            },
+            restrict: 'A',
+            replace: true,
+            template: '<td ng-class=\'{"text-danger": value  < 0 || (inverse && value > 0) }\' style="text-align: right">{{value | number : 2 }} {{"CURRENCY" | translate}}</td>'
+        };
     });
-
-;

@@ -16,6 +16,8 @@
         </div>
     </div>
     <br/>
+
+
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
@@ -66,9 +68,7 @@
                             <tr class="odd gradeX" ng-repeat="item in moneyFlows | orderBy:orderByField:reverseSort">
                                 <td>{{item.bookingdate * 1000 | date: "yyyy-MM-dd"}}</td>
                                 <td>{{item.invoicedate * 1000 | date: "yyyy-MM-dd"}}</td>
-                                <td ng-class='{"text-danger": item.amount  <0}' style="text-align: right">{{item.amount
-                                                                                                          | number }} {{'CURRENCY' | translate}}
-                                </td>
+                                <td currency-row value="item.amount"></td>
                                 <td>{{item.contractpartnername}}</td>
                                 <td>{{item.comment}}</td>
                                 <td>{{item.postingaccountname}}</td>
@@ -77,9 +77,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2" style="text-align: right">&#931; &nbsp;</td>
-                                <td style="text-align: right"
-                                    ng-class='{"text-danger": item.amount  <0}'>{{getTotalFlow()}} {{'CURRENCY' | translate}}
-                                </td>
+                                <td currency-row value="getTotalFlow()"></td>
                                 <td colspan="4"></td>
 
 
@@ -125,22 +123,12 @@
                                 <td>{{item.capitalsourceType | capitalSourceType | translate}}</td>
                                 <td>{{item.capitalsourceState | capitalSourceState | translate}}</td>
                                 <td>{{item.capitalsourceComment}}</td>
-                                <td ng-class='{"text-danger": item.amountBeginOfMonthFixed  <0}' style="text-align: right">{{item.amountBeginOfMonthFixed
-                                                                                                                           | number }} {{'CURRENCY' | translate}}
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": item.amountEndOfMonthFixed  <0}'
-                                    style="text-align: right">{{item.amountEndOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">{{item.amountEndOfMonthCalculated
-                                                                                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-                                <td ng-if="exists.monthleySettlement && item.amountEndOfMonthFixed"
-                                    ng-class='{"text-danger": (item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)  <0}'
-                                    style="text-align: right">{{(item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)
-                                                              | number }} {{'CURRENCY' | translate}}
-                                <td ng-if="!exists.monthleySettlement" ng-class='{"text-danger": item.amountCurrent  <0}'
-                                    style="text-align: right">{{item.amountCurrent
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
+                                <td currency-row value="item.amountBeginOfMonthFixed"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="item.amountEndOfMonthFixed"></td>
+                                <td currency-row value="item.amountEndOfMonthCalculated"></td>
+                                <td currency-row ng-if="exists.monthleySettlement && item.amountEndOfMonthFixed"
+                                    value="(item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)"></td>
+                                <td currency-row ng-if="!exists.monthleySettlement" value="item.amountCurrent"></td>
                                 <td ng-if="!exists.monthleySettlement && item.amountCurrentState != null">{{item.amountCurrentState}}</td>
                                 <td ng-if="!exists.monthleySettlement && item.amountCurrentState == null">{{'TEXT_290' | translate}}</td>
 
@@ -148,34 +136,12 @@
 
                             <tr>
                                 <td colspan="3" style="text-align: right">&#931; &nbsp;</td>
-
-                                <td ng-class='{"text-danger": equity.sum.amountBeginOfMonthFixed  <0}'
-                                    style="text-align: right">{{equity.sum.amountBeginOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": equity.sum.amountEndOfMonthFixed  <0}'
-                                    style="text-align: right">{{equity.sum.amountEndOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-                                <td ng-class='{"text-danger": equity.sum.amountEndOfMonthCalculated  <0}'
-                                    style="text-align: right">{{equity.sum.amountEndOfMonthCalculated
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="!exists.monthleySettlement" ng-class='{"text-danger": equity.sum.amountCurrent  <0}'
-                                    style="text-align: right">{{equity.sum.amountCurrent
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": equity.sum.amountDifference  <0}'
-                                    style="text-align: right">{{equity.sum.amountDifference
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
+                                <td currency-row value="equity.sum.amountBeginOfMonthFixed"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="equity.sum.amountEndOfMonthFixed"></td>
+                                <td currency-row value="equity.sum.amountEndOfMonthCalculated"></td>
+                                <td currency-row ng-if="!exists.monthleySettlement" value="equity.sum.amountCurrent"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="equity.sum.amountDifference"></td>
                             </tr>
-
-
                             </tbody>
                         </table>
                     </div>
@@ -208,53 +174,23 @@
                                 <td>{{item.capitalsourceType | capitalSourceType | translate}}</td>
                                 <td>{{item.capitalsourceState | capitalSourceState | translate}}</td>
                                 <td>{{item.capitalsourceComment}}</td>
-                                <td ng-class='{"text-danger": item.amountBeginOfMonthFixed  <0}' style="text-align: right">{{item.amountBeginOfMonthFixed
-                                                                                                                           | number }} {{'CURRENCY' | translate}}
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": item.amountEndOfMonthFixed  <0}'
-                                    style="text-align: right">{{item.amountEndOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  > 0}' style="text-align: right">{{item.amountEndOfMonthCalculated
-                                                                                                                               | number }} {{'CURRENCY' | translate}}
-                                </td>
-                                <td ng-if="exists.monthleySettlement && item.amountEndOfMonthFixed"
-                                    ng-class='{"text-danger": (item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)  <0}'
-                                    style="text-align: right">{{(item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)
-                                                              | number }} {{'CURRENCY' | translate}}
-                                <td ng-if="!exists.monthleySettlement" ng-class='{"text-danger": item.amountCurrent  <0}'
-                                    style="text-align: right">{{item.amountCurrent
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
+                                <td currency-row value="item.amountBeginOfMonthFixed"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="item.amountEndOfMonthFixed"></td>
+                                <td currency-row value="item.amountEndOfMonthCalculated" inverse="true"></td>
+                                <td currency-row ng-if="exists.monthleySettlement && item.amountEndOfMonthFixed"
+                                    value="(item.amountEndOfMonthFixed - item.amountEndOfMonthCalculated)"></td>
+                                <td currency-row ng-if="!exists.monthleySettlement" value="item.amountCurrent"></td>
                                 <td ng-if="!exists.monthleySettlement && item.amountCurrentState != null">{{item.amountCurrentState}}</td>
                                 <td ng-if="!exists.monthleySettlement && item.amountCurrentState == null">{{'TEXT_290' | translate}}</td>
 
                             </tr>
                             <tr>
                                 <td colspan="3" style="text-align: right">&#931; &nbsp;</td>
-
-                                <td ng-class='{"text-danger": dept.sum.amountBeginOfMonthFixed  <0}'
-                                    style="text-align: right">{{dept.sum.amountBeginOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": dept.sum.amountEndOfMonthFixed  <0}'
-                                    style="text-align: right">{{dept.sum.amountEndOfMonthFixed
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-                                <td ng-class='{"text-danger": dept.sum.amountEndOfMonthCalculated  > 0}'
-                                    style="text-align: right">{{dept.sum.amountEndOfMonthCalculated
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="!exists.monthleySettlement" ng-class='{"text-danger": dept.sum.amountCurrent  <0}'
-                                    style="text-align: right">{{dept.sum.amountCurrent
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
-                                <td ng-if="exists.monthleySettlement" ng-class='{"text-danger": dept.sum.amountDifference  <0}'
-                                    style="text-align: right">{{dept.sum.amountDifference
-                                                              | number }} {{'CURRENCY' | translate}}
-                                </td>
-
+                                <td currency-row value="dept.sum.amountBeginOfMonthFixed"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="dept.sum.amountEndOfMonthFixed"></td>
+                                <td currency-row value="dept.sum.amountEndOfMonthCalculated" inverse="true"></td>
+                                <td currency-row ng-if="!exists.monthleySettlement" value="dept.sum.amountCurrent"></td>
+                                <td currency-row ng-if="exists.monthleySettlement" value="dept.sum.amountDifference"></td>
                             </tr>
 
                             </tbody>
@@ -289,46 +225,23 @@
                                 </tr>
 
                                 <tr ng-if="exists.monthleySettlement">
-                                    <th>
-                                        {{'TEXT_66' | translate}}
-                                    </th>
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{(equity.sum.amountEndOfMonthFixed - equity.sum.amountBeginOfMonthFixed)
-                                        | number }} {{'CURRENCY' | translate}}
-                                    </td>
-
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{(equity.sum.amountEndOfMonthFixed - reportList.amountBeginOfYear)
-                                        | number }} {{'CURRENCY' | translate}}
-                                    </td>
-
-
+                                    <th> {{'TEXT_66' | translate}}</th>
+                                    <td currency-row value="(equity.sum.amountEndOfMonthFixed - equity.sum.amountBeginOfMonthFixed)"></td>
+                                    <td currency-row value="(equity.sum.amountEndOfMonthFixed - reportList.amountBeginOfYear)"></td>
                                 </tr>
                                 <tr>
                                     <th>
                                         {{'TEXT_67' | translate}}
                                     </th>
-
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{calculatedMonthTurnover | number }} {{'CURRENCY' | translate}}
-                                    </td>
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{reportList.turnoverEndOfYearCalculated | number }} {{'CURRENCY' | translate}}
-                                    </td>
+                                    <td currency-row value="calculatedMonthTurnover"></td>
+                                    <td currency-row value="reportList.turnoverEndOfYearCalculated"></td>
                                 </tr>
                                 <tr ng-if="exists.monthleySettlement">
-                                    <th>
-                                        {{'TEXT_65' | translate}}
-                                    </th>
-
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{(equity.sum.amountEndOfMonthFixed - equity.sum.amountBeginOfMonthFixed - reportList.turnoverEndOfYearCalculated)
-                                        | number }} {{'CURRENCY' | translate}}
-                                    </td>
-                                    <td ng-class='{"text-danger": item.amountEndOfMonthCalculated  <0}' style="text-align: right">
-                                        {{(equity.sum.amountEndOfMonthFixed - reportList.amountBeginOfYear - reportList.turnoverEndOfYearCalculated)
-                                        | number }} {{'CURRENCY' | translate}}
-                                    </td>
+                                    <th> {{'TEXT_65' | translate}}</th>
+                                    <td currency-row
+                                        value="(equity.sum.amountEndOfMonthFixed - equity.sum.amountBeginOfMonthFixed - reportList.turnoverEndOfYearCalculated)"></td>
+                                    <td currency-row
+                                        value="(equity.sum.amountEndOfMonthFixed - reportList.amountBeginOfYear - reportList.turnoverEndOfYearCalculated)"></td>
                                 </tr>
 
                                 </thead>
