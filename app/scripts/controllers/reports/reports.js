@@ -16,11 +16,11 @@ angular.module('moneyJinnApp')
 
         reports.exists = {
             monthleySettlement: false
-        }
+        };
 
         reports.sum = {
             amountCurrent: 0
-        }
+        };
 
         reports.errorMessage = null;
         reports.moneyFlows = null;
@@ -43,7 +43,7 @@ angular.module('moneyJinnApp')
                 amountDifference: 0,
                 amountEndOfMonthCalculated: 0
             }
-        }
+        };
 
         reports.equity = {
             data: [],
@@ -54,19 +54,20 @@ angular.module('moneyJinnApp')
                 amountDifference: 0,
                 amountEndOfMonthCalculated: 0
             }
-        }
+        };
 
 
         var current_year = new Date().getFullYear();
-        var current_month = new Date().getMonth() + 1; //january ==1
+        //january ==1
+        var current_month = new Date().getMonth() + 1;
 
         ReportsService.getReportList("", "").then(function (response) {
             if (response.data.listReportsResponse != null && response.data.listReportsResponse.allYears != null) {
-                reports.allYears = response.data.listReportsResponse.allYears;
 
+                reports.allYears = response.data.listReportsResponse.allYears;
                 //pre select current year in select box if there are reports of current year
                 for (var i = 0; i < reports.allYears.length; i++) {
-                    if (current_year == reports.allYears[i]) {
+                    if (current_year.toString() === reports.allYears[i]) {
                         reports.select.year = current_year;
                     }
                 }
@@ -89,7 +90,7 @@ angular.module('moneyJinnApp')
                     amountDifference: 0,
                     amountEndOfMonthCalculated: 0
                 }
-            }
+            };
 
             reports.equity = {
                 data: [],
@@ -100,15 +101,15 @@ angular.module('moneyJinnApp')
                     amountDifference: 0,
                     amountEndOfMonthCalculated: 0
                 }
-            }
+            };
 
             reports.exists.monthleySettlement = false;
-        }
+        };
 
 
         reports.onYearSelect = function () {
             reports.clearDataStructures();
-            reports.select.month = null
+            reports.select.month = null;
             reports.calculatedMonthTurnover = 0;
 
 
@@ -120,9 +121,9 @@ angular.module('moneyJinnApp')
                             reports.allMonth = response.data.listReportsResponse.allMonth;
 
                             //pre select current month in select box, if there is a report of this month and if selected year is current year
-                            if (current_year == reports.select.year) {
+                            if (current_year === reports.select.year) {
                                 angular.forEach(reports.allMonth, function (month) {
-                                    if (current_month == month) {
+                                    if (current_month.toString() === month) {
                                         reports.select.month = month;
                                     }
                                 });
@@ -133,16 +134,16 @@ angular.module('moneyJinnApp')
                         }
 
                     }
-                )
+                );
 
                 reports.updateReportsView();
             }
-        }
+        };
 
         reports.updateReportsView = function () {
             reports.clearDataStructures();
 
-            if (reports.select.year != null && reports.select.month != null) {
+            if (reports.select.year !== null && reports.select.month !== null) {
                 ReportsService.getReportList(reports.select.year, reports.select.month).then(function (response) {
 
                     reports.reportList = response.data.listReportsResponse;
@@ -157,7 +158,7 @@ angular.module('moneyJinnApp')
                         reports.moneyFlows = null;
                     }
 
-                    var flows_size = Object.keys(reports.reportList.reportTurnoverCapitalsourceTransport).length;
+                    flows_size = Object.keys(reports.reportList.reportTurnoverCapitalsourceTransport).length;
                     if (reports.reportList.reportTurnoverCapitalsourceTransport && flows_size > 0) {
 
                         var reportTurnoverCapitalsource = reports.reportList.reportTurnoverCapitalsourceTransport;
@@ -209,12 +210,12 @@ angular.module('moneyJinnApp')
                 });
 
             }
-        }
+        };
 
 
         reports.getTotalFlow = function () {
             var total = 0;
-            if ($scope.moneyFlows != null) {
+            if ($scope.moneyFlows !== null) {
                 for (var i = 0; i < $scope.moneyFlows.length; i++) {
                     total += parseFloat($scope.moneyFlows[i].amount);
                 }
@@ -224,7 +225,7 @@ angular.module('moneyJinnApp')
     }).filter('capitalSourceType', function () {
         return function (input) {
 
-            var label = 'TEXT_'
+            var label = 'TEXT_';
 
             switch (input) {
                 case 1:
@@ -239,9 +240,11 @@ angular.module('moneyJinnApp')
                 case 4:
                     return label + '279';
                     break;
+                default :
+                    return null;
 
             }
-        }
+        };
     }).filter('capitalSourceState', function () {
         return function (input) {
 
@@ -254,8 +257,10 @@ angular.module('moneyJinnApp')
                 case 2:
                     return label + '176';
                     break;
+                default :
+                    return null;
             }
-        }
+        };
     }).directive('currencyRow', function () {
         return {
             scope: {
