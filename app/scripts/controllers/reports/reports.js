@@ -245,7 +245,7 @@ angular.module('moneyJinnApp')
     }).filter('capitalSourceState', function () {
         return function (input) {
 
-            var label = 'TEXT_'
+            var label = 'TEXT_';
 
             switch (input) {
                 case 1:

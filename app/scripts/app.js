@@ -53,7 +53,7 @@ angular
                                     'scripts/directives/sidebar/sidebar-search/sidebar-search.js',
                                     'scripts/controllers/main.js'
                                 ]
-                            })
+                            }
                             ,
                             $ocLazyLoad.load(
                                 {
@@ -65,6 +65,7 @@ angular
                                     name: 'angular-storage',
                                     files: ['bower_components/a0-angular-storage/dist/angular-storage.min.js']
                                 })
+                        );
                     }
                 }
             })
@@ -84,7 +85,7 @@ angular
                             files: [
                                 'scripts/controllers/login/login.js'
                             ]
-                        })
+                        });
                     }
                 }
             })
@@ -104,7 +105,7 @@ angular
                                 'scripts/service/reportsService.js',
                                 'scripts/controllers/reports/reports.js'
                             ]
-                        })
+                        });
                     }
                 }
             })
@@ -115,9 +116,9 @@ angular
                 'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166'];
 
             return monthNames[monthNumber - 1];
-        }
+        };
     }).filter('capitalize', function () {
         return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-        }
+        };
     });

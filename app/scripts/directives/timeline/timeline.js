@@ -12,5 +12,5 @@ angular.module('moneyJinnApp')
         templateUrl:'scripts/directives/timeline/timeline.html',
         restrict: 'E',
         replace: true
-    }
+    };
   });

@@ -12,7 +12,7 @@ angular.module('moneyJinnApp')
         templateUrl:'scripts/directives/header/header.html',
         restrict: 'E',
         replace: true
-    	}
+    	};
 	});
 
 

@@ -18,7 +18,7 @@ angular.module('moneyJinnApp')
             service.main = {
                 currentUser: UserService.getCurrentUser(),
                 currentUserSettings: UserService.getCurrentUserSettings()
-            }
+            };
 
             if (service.main.currentUserSettings.settingDisplayedLanguage != null) {
                 $translate.use(service.main.currentUserSettings.settingDisplayedLanguage);
@@ -52,11 +52,9 @@ angular.module('moneyJinnApp')
                 jsDateFormat = jsDateFormat.replace('DD', 'dd');
             }
             if (jsDateFormat === '') {
-                jsDateFormat = 'yyyy-mm-dd'
+                jsDateFormat = 'yyyy-mm-dd';
             }
             return jsDateFormat;
 
-        }
-
-
+        };
     });

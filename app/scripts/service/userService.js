@@ -49,7 +49,7 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
                 jsDateFormat = jsDateFormat.replace('DD', 'dd');
             }
             if (jsDateFormat === '') {
-                jsDateFormat = 'yyyy-mm-dd'
+                jsDateFormat = 'yyyy-mm-dd';
             }
             currentUserSettings.settingDateFormat = jsDateFormat;
         }
@@ -60,12 +60,8 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
 
     service.isUserCheckedIn =function () {
         var user = service.getCurrentUserSettings();
-        if (user) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        return (user != null);
+    };
 
     service.login = function (user) {
 
@@ -75,7 +71,5 @@ angular.module('moneyJinnApp').service('UserService', function ($http, store) {
             .success(function (response) {
                 return response;
             });
-
-    }
-
-})
+    };
+});

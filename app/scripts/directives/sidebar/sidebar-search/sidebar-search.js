@@ -18,5 +18,5 @@ angular.module('moneyJinnApp')
       controller:function($scope){
         $scope.selectedMenu = 'home';
       }
-    }
+    };
   });

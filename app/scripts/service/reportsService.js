@@ -14,6 +14,5 @@ angular.module('moneyJinnApp').service('ReportsService', function ($http) {
 
             });
 
-    }
-
-})
+    };
+});
