@@ -37,7 +37,5 @@ angular.module('moneyJinnApp')
                     login.error = response.data.error.message;
                 }
             });
-
-            var storedUser = UserService.getCurrentUser();
         };
     })

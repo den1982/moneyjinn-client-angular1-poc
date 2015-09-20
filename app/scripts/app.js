@@ -31,7 +31,7 @@ angular
 
         $ocLazyLoadProvider.config({
             debug: false,
-            events: true,
+            events: true
         });
 
         $urlRouterProvider.otherwise('/login');
@@ -70,7 +70,7 @@ angular
             })
             .state('page.home', {
                 url: '/home',
-                templateUrl: '../views/pages/home.html',
+                templateUrl: '../views/pages/home.html'
 
             })
             .state('login', {
@@ -109,15 +109,15 @@ angular
                 }
             })
 
-    }]).filter('monthNameI18nLabel', ['$translate', function ($translate) {
+    }]).filter('monthNameI18nLabel', function () {
         return function (monthNumber) { //1 = January
             var monthNames = ['TEXT_155', 'TEXT_156', 'TEXT_157', 'TEXT_158', 'TEXT_159', 'TEXT_160',
                 'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166'];
 
             return monthNames[monthNumber - 1];
         }
-    }]).filter('capitalize', function() {
-        return function(input) {
+    }).filter('capitalize', function () {
+        return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
         }
     });
