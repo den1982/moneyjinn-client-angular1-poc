@@ -1,4 +1,4 @@
-angular.module('moneyJinnApp').service('ReportsService', function ($http, store) {
+angular.module('moneyJinnApp').service('ReportsService', function ($http) {
     var service = this;
 
     service.getReportList = function(year, month) {
@@ -10,7 +10,7 @@ angular.module('moneyJinnApp').service('ReportsService', function ($http, store)
 
 
         return $http.get(url)
-            .success(function (response) {
+            .success(function () {
 
             });
 

@@ -83,7 +83,7 @@ angular.module('moneyJinnApp')
                         n += 2
                     } else {
                         c2 = e.charCodeAt(n + 1);
-                        c3 = e.charCodeAt(n + 2);
+                        var c3 = e.charCodeAt(n + 2);
                         t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63);
                         n += 3
                     }
@@ -129,14 +129,14 @@ angular.module('moneyJinnApp')
             } else {
                 body_md5 = "";
             }
-            stringToSign = httpVerb + "\n" + body_md5 + "\n" + contentType + "\n" + date + "\n\n" + url;
+            var stringToSign = httpVerb + "\n" + body_md5 + "\n" + contentType + "\n" + date + "\n\n" + url;
 
             var shaObj = new jsSHA("SHA-1", "TEXT");
             shaObj.setHMACKey(secret, "TEXT");
             shaObj.update(stringToSign);
             var hmac = shaObj.getHMAC("HEX");
 
-            base64 = Base64.encode(hmac);
+            var base64 = Base64.encode(hmac);
 
             return "MNF" + ident + ":" + base64;
         };
@@ -147,7 +147,7 @@ angular.module('moneyJinnApp')
                 return string;
             }
             else {
-                return new String();
+                return "";
             }
         }
 

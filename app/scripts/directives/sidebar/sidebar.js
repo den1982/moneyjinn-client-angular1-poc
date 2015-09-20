@@ -22,7 +22,7 @@ angular.module('moneyJinnApp')
         
         $scope.check = function(x){
           
-          if(x==$scope.collapseVar)
+          if(x===$scope.collapseVar)
             $scope.collapseVar = 0;
           else
             $scope.collapseVar = x;
@@ -30,7 +30,7 @@ angular.module('moneyJinnApp')
         
         $scope.multiCheck = function(y){
           
-          if(y==$scope.multiCollapseVar)
+          if(y===$scope.multiCollapseVar)
             $scope.multiCollapseVar = 0;
           else
             $scope.multiCollapseVar = y;

@@ -202,7 +202,8 @@ angular.module('moneyJinnApp')
                                     break;
 
                             }
-                        })
+                        }
+                        );
 
                     } else {
                         reports.reportTurnoverCapitalsource = null;
@@ -221,7 +222,7 @@ angular.module('moneyJinnApp')
                 }
             }
             return total;
-        }
+        };
     }).filter('capitalSourceType', function () {
         return function (input) {
 
@@ -230,16 +231,12 @@ angular.module('moneyJinnApp')
             switch (input) {
                 case 1:
                     return label + '173';
-                    break;
                 case 2:
                     return label + '174';
-                    break;
                 case 3:
                     return label + '278';
-                    break;
                 case 4:
                     return label + '279';
-                    break;
                 default :
                     return null;
 
@@ -253,10 +250,8 @@ angular.module('moneyJinnApp')
             switch (input) {
                 case 1:
                     return label + '175';
-                    break;
                 case 2:
                     return label + '176';
-                    break;
                 default :
                     return null;
             }
