@@ -36,8 +36,7 @@ angular
 
         $urlRouterProvider.otherwise('/login');
 
-        $stateProvider
-            .state('page', {
+        $stateProvider.state('page', {
                 url: '/page',
                 controller: 'MainCtrl',
                 templateUrl: '../views/pages/main.html',
@@ -111,7 +110,8 @@ angular
             })
 
     }]).filter('monthNameI18nLabel', function () {
-        return function (monthNumber) { //1 = January
+        //1 = january
+        return function (monthNumber) {
             var monthNames = ['TEXT_155', 'TEXT_156', 'TEXT_157', 'TEXT_158', 'TEXT_159', 'TEXT_160',
                 'TEXT_161', 'TEXT_162', 'TEXT_163', 'TEXT_164', 'TEXT_165', 'TEXT_166'];
 

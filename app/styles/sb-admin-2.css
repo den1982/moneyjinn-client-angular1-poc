@@ -229,27 +229,27 @@ body {
     clear: both;
 }
 
-table.dataTable thead .sorting,
-table.dataTable thead .sorting_asc,
-table.dataTable thead .sorting_desc,
-table.dataTable thead .sorting_asc_disabled,
-table.dataTable thead .sorting_desc_disabled {
+table.datatable thead .sorting,
+table.datatable thead .sorting_asc,
+table.datatable thead .sorting_desc,
+table.datatable thead .sorting_asc_disabled,
+table.datatable thead .sorting_desc_disabled {
     background: 0 0;
 }
 
-table.dataTable thead .sorting_asc:after {
+table.datatable thead .sorting_asc:after {
     content: "\f0de";
     float: right;
     font-family: fontawesome;
 }
 
-table.dataTable thead .sorting_desc:after {
+table.datatable thead .sorting_desc:after {
     content: "\f0dd";
     float: right;
     font-family: fontawesome;
 }
 
-table.dataTable thead .sorting:after {
+table.datatable thead .sorting:after {
     content: "\f0dc";
     float: right;
     font-family: fontawesome;

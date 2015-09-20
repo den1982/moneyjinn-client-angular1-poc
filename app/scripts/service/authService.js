@@ -47,7 +47,7 @@ angular.module('moneyJinnApp').service('AuthInterceptor', function ($rootScope, 
                 }
             }
             t = Base64._utf8_decode(t);
-            return t
+            return t;
         },
         _utf8_encode: function (e) {
             e = e.replace(/\r\n/g, "\n");
@@ -55,7 +55,7 @@ angular.module('moneyJinnApp').service('AuthInterceptor', function ($rootScope, 
             for (var n = 0; n < e.length; n++) {
                 var r = e.charCodeAt(n);
                 if (r < 128) {
-                    t += String.fromCharCode(r)
+                    t += String.fromCharCode(r);
                 } else if (r > 127 && r < 2048) {
                     t += String.fromCharCode(r >> 6 | 192);
                     t += String.fromCharCode(r & 63 | 128);
